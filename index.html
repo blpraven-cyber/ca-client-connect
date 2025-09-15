@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<div class="login-link">
+  
+</div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CA Connect Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">CA Connect Pro</div>
+      <div class="user">👤 Priya | <a href="#" class="logout">Logout</a></div>
+    </header>
+
+    <!-- Dashboard -->
+    <main>
+      <h1>Your Financial Dashboard</h1>
+
+      <!-- Deadline Card -->
+      <div class="card">
+        <h2>📅 Next Deadline: GST – Apr 20</h2>
+        <p>⏳ <strong>7 days left</strong></p>
+        <p>🟢 Status: Awaiting your input</p>
+      </div>
+
+      <!-- Tax Summary -->
+      <div class="card">
+        <h2>💰 Tax Summary (Mar 2025)</h2>
+        <ul>
+          <li><strong>Sales:</strong> ₹4.2L (+12%)</li>
+          <li><strong>GST Payable:</strong> ₹87,000</li>
+          <li><strong>TDS Refund:</strong> ₹18,000 (Expected)</li>
+        </ul>
+      </div>
+
+      <!-- AI Insight -->
+      <div class="card highlight">
+        <h2>🎯 AI Insight</h2>
+        <p>
+          “Your input tax > output tax. 
+          Claim ₹45,000 refund this month.”
+        </p>
+        <button class="btn-secondary">💡 Learn More</button>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <a href="#" class="btn-primary">📤 Upload Bill</a>
+        <a href="#" class="btn-outline">💬 Chat with CA</a>
+      </div>
+    </main>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+      window.location.href = 'login.html';
+    }
+
+    // Show user name
+    document.querySelector('.user').innerHTML = `<strong>${user.name}</strong> | <a href="#" class="logout">Logout</a>`;
+  });
+
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('logout')) {
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+</body>
+</html>
