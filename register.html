@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - CA Connect Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wight@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">CA ConnectPro</div>
+    </header>
+
+    <main>
+      <h1>Create Your Account</h1>
+      <p>Join CA Connect Pro to manage your taxes easily.</p>
+
+      <form id="registerForm">
+        <div class="input-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Priya Sharma" required />
+        </div>
+
+        <div class="input-group">
+         <label for="password">Password</label>
+            <input type="password" id="password" placeholder="••••••••" required />
+          </div>
+
+        <div class="input-group">
+          <label for="pan">PAN Number</label>
+          <input type="text" id="pan" placeholder="ABCDE1234F" required />
+        </div>
+
+        <div class="input-group">
+          <label for="gstin">GSTIN</label>
+          <input type="text" id="gstin" placeholder="27AAEPP1234P1Z5" required />
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="priya@boutique.com" required />
+        </div>
+
+        <div class="input-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="9876543210" required />
+        </div>
+
+        <div class="input-group">
+          <label for="business">Business Type</label>
+          <select id="business" required>
+            <option value="">Select</option>
+            <option value="Proprietorship">Proprietorship</option>
+            <option value="LLP">LLP</option>
+            <option value="Pvt Ltd">Pvt Ltd</option>
+            <option value="Company">Company</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+
+      <p class="already-have">
+        Already have an account? <a href="login.html">Login here</a>
+      </p>
+    </main>
+  </div>
+
+  <script>
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Get form data
+    const formData = new FormData(this);
+    const data = {
+      Client_ID: 'C' + Date.now().toString().slice(-6), // e.g., C123456
+      Name: formData.get('name'),
+      PAN: formData.get('pan'),
+      GSTIN: formData.get('gstin'),
+      E_mail: formData.get('email'), // Note: Google Sheets column name
+      Phone: formData.get('phone'),
+      Business_Type: formData.get('business'),
+      Status: 'Pending'
+    };
+
+    // SheetDB API endpoint (replace with your own)
+    const sheetDBEndpoint = 'https://sheetdb.io/api/v1/ibbuzqvzph03m';
+
+    // Send data to Google Sheets
+    fetch(sheetDBEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(() => {
+      alert('Thank you! Your request has been sent to your CA for approval.');
+      window.location.href = 'login.html';
+    })
+    .catch(error => {
+      console.error('Error saving ', error);
+      alert('Something went wrong. Please try again.');
+    });
+});
+</script>
+</body>
+</html>
